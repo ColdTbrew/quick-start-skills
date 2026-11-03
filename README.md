@@ -24,7 +24,7 @@ git clone --depth 1 https://github.com/ColdTbrew/quick-start-skills /tmp/quick-s
 
 - Default target is `~/.agents/skills` (Codex user scope), so the skills stay out of the task workspace.
 - `--project` installs into `./.agents/skills` instead.
-- `--with-pstack` also copies six skills from [ColdTbrew/pstack-codex](https://github.com/ColdTbrew/pstack-codex). This is a subset, not the full plugin.
+- `--with-pstack` also copies every skill from [ColdTbrew/pstack-codex](https://github.com/ColdTbrew/pstack-codex), including `poteto-mode`, into the selected skill folder. Existing skills with the same names are replaced.
 - `--with-pstack-plugin` registers the full `pstack-codex` plugin with Codex. Plugin registration is user-wide even with `--project`; custom-agent profiles require the separate step in the upstream installation instructions.
 - `--with-taste` installs **the official `design-taste-frontend`** skill from `Leonxlnx/taste-skill` for Codex via npm (`npx skills`). Node.js 22.20+ is recommended/required by the current skills CLI.
 - `--with-tanstack` installs the official `start-core`, `react-start`, `router-core`, and `react-router` skills from `TanStack/router` via `npx skills`. It does not install an app or npm dependencies. These are snapshots of the upstream skills; after creating an app, use [TanStack Intent](https://tanstack.com/intent/latest/docs/overview) to load guidance matching installed package versions.
@@ -36,7 +36,9 @@ For a webapp setup with all three optional sources:
 bash /tmp/quick-start-skills/install.sh --with-pstack --with-taste --with-tanstack
 ```
 
-To install the full plugin with quick-start skills, run `bash /tmp/quick-start-skills/install.sh --with-pstack-plugin`. For its custom-agent profiles, follow the [pstack-codex installation instructions](https://github.com/ColdTbrew/pstack-codex#install); `--with-pstack` alone installs only the six standalone skills.
+`--with-pstack` installs the complete set of standalone skills; it does not register the plugin or install custom-agent profiles. To register the plugin with quick-start skills, run `bash /tmp/quick-start-skills/install.sh --with-pstack-plugin`. For custom-agent profiles, follow the [pstack-codex installation instructions](https://github.com/ColdTbrew/pstack-codex#install).
+
+To install the skills only in the current project, use `bash /tmp/quick-start-skills/install.sh --project --with-pstack`. Invoke `$poteto-mode` after starting a new Codex task. The plugin-qualified `$pstack-codex:poteto-mode` requires plugin registration.
 
 `AGENTS.md` is a short working agreement. Copy it into the workspace only if you want Codex to load it automatically.
 

@@ -2,7 +2,7 @@
 # Install quick-start-skills into Codex skill folders.
 #   bash install.sh              -> $HOME/.agents/skills   (user scope, not part of the workspace)
 #   bash install.sh --project    -> ./.agents/skills       (repo scope, current directory)
-#   add --with-pstack            -> copy six skills from ColdTbrew/pstack-codex
+#   add --with-pstack            -> copy all skills from ColdTbrew/pstack-codex
 #   add --with-pstack-plugin     -> register the full pstack-codex plugin globally
 #   add --with-taste             -> install official Leonxlnx/taste-skill via npx skills for Codex
 #   add --with-tanstack          -> install official TanStack Start and Router skills for Codex
@@ -30,16 +30,25 @@ for d in "$here"/skills/*/; do
   cp -R "$d" "$dest/$name"
   echo "installed $name"
 done
-if [ "$with_pstack" = 1 ]; then
+if [ "$with_pstack" = 1 ]; then (
   tmp="$(mktemp -d)"
+  trap 'rm -rf "$tmp"' EXIT
   git clone -q --depth 1 https://github.com/ColdTbrew/pstack-codex "$tmp/pstack"
-  for s in principle-prove-it-works principle-explain-the-number principle-fix-root-causes \
-           principle-laziness-protocol principle-subtract-before-you-add in-your-own-words; do
-    rm -rf "${dest:?}/$s"
-    cp -R "$tmp/pstack/plugins/pstack-codex/skills/$s" "$dest/$s"
-    echo "installed pstack-codex/$s"
+  count=0
+  for d in "$tmp"/pstack/plugins/pstack-codex/skills/*/; do
+    [ -f "$d/SKILL.md" ] || continue
+    name="$(basename "$d")"
+    rm -rf "${dest:?}/$name"
+    cp -R "$d" "$dest/$name"
+    echo "installed pstack-codex/$name"
+    count=$((count + 1))
   done
-  rm -rf "$tmp"
+  if [ "$count" -eq 0 ]; then
+    echo "error: no pstack skills found" >&2
+    exit 1
+  fi
+  echo "installed $count pstack-codex skills"
+  )
 fi
 if [ "$with_pstack_plugin" = 1 ]; then
   if ! command -v codex >/dev/null 2>&1; then
