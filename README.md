@@ -15,6 +15,7 @@ They contain no task-specific code or answers. They describe *how to work*: what
 | `report-writer` | 1–2 page decision-oriented report |
 | `decision-log` | Append-only `DECISIONS.md` and prep for no-AI follow-up questions |
 | `webapp-3000` | **3-hour full-stack demo:** TanStack Start, local login, SQLite/CRUD, single port 3000, Taste design pass |
+| `mobbin-design` | Apply the Mobbin-inspired DESIGN.md reference from getdesign.md when requested |
 
 ## Install
 
@@ -29,6 +30,8 @@ git clone --depth 1 https://github.com/ColdTbrew/quick-start-skills /tmp/quick-s
 - `--with-taste` installs **the official `design-taste-frontend`** skill from `Leonxlnx/taste-skill` for Codex via npm (`npx skills`). Node.js 22.20+ is recommended/required by the current skills CLI.
 - `--with-tanstack` installs the official `start-core`, `react-start`, `router-core`, and `react-router` skills from `TanStack/router` via `npx skills`. It does not install an app or npm dependencies. These are snapshots of the upstream skills; after creating an app, use [TanStack Intent](https://tanstack.com/intent/latest/docs/overview) to load guidance matching installed package versions.
 - Check in Codex with `/skills`, or call one directly with `$task-workflow`.
+
+For Mobbin-inspired UI, ask Codex to use `$mobbin-design`. It fetches the [Mobbin DESIGN.md](https://getdesign.md/mobbin/design-md) with `npx getdesign@latest add mobbin` when needed and reads the resulting reference. The original is a design reference, not an upstream Codex skill. The CLI preserves an existing root `DESIGN.md` by using `mobbin/DESIGN.md` instead. This requires npm/network access; existing design guidance remains available offline.
 
 For a webapp setup with all three optional sources:
 
